@@ -21,27 +21,21 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column
-    @NotEmpty
-    @Email(message = "Введенное значение не является адресом электронной почты.")
-    private String email;
-    @Column
+    private Long id;
+    @Column(name = "Name")
     @NotEmpty
     @NotBlank
     private String name;
-    @Column
-    private String middleName;
-    @Column
+    @Column(name = "Email")
     @NotEmpty
-    @NotBlank
-    private String lastName;
+    @Email(message = "Введенное значение не является адресом электронной почты.")
+    private String email;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User user)) return false;
-        return getId() == user.getId();
+        return getId().equals(user.getId());
     }
 
     @Override
