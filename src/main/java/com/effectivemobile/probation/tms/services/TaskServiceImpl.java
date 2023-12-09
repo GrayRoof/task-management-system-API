@@ -1,11 +1,24 @@
 package com.effectivemobile.probation.tms.services;
 
 import com.effectivemobile.probation.tms.model.comment.CommentDto;
+import com.effectivemobile.probation.tms.model.task.Task;
 import com.effectivemobile.probation.tms.model.task.TaskDto;
+import com.effectivemobile.probation.tms.model.task.TaskMapper;
+import com.effectivemobile.probation.tms.model.task.NewTaskDto;
+import com.effectivemobile.probation.tms.model.user.User;
+import com.effectivemobile.probation.tms.repositories.TaskRepository;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+@Slf4j
+@Service
+@AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
+    private final TaskRepository taskRepository;
+    private final UserService userService;
     @Override
     public TaskDto get(long taskId, long userId) {
         return null;
@@ -17,8 +30,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDto add(TaskDto taskDto, long userId) {
-        return null;
+    public TaskDto add(NewTaskDto taskDto, long authorId) {
+        User performer = userService.getEntity(taskDto.getPerformer());
+        User author = userService.getEntity(authorId);
+        Task task = taskRepository.save(TaskMapper.toTask(taskDto, performer, author));
+        return TaskMapper.toTaskDto(task);
     }
 
     @Override

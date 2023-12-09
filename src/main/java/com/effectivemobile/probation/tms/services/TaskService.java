@@ -2,6 +2,7 @@ package com.effectivemobile.probation.tms.services;
 
 import com.effectivemobile.probation.tms.model.comment.CommentDto;
 import com.effectivemobile.probation.tms.model.task.TaskDto;
+import com.effectivemobile.probation.tms.model.task.NewTaskDto;
 
 import java.util.Collection;
 
@@ -10,7 +11,7 @@ public interface TaskService {
 
     Collection<TaskDto> getAllByUserId(long userId, int from, int size);
 
-    TaskDto add(TaskDto taskDto, long userId);
+    TaskDto add(NewTaskDto taskDto, long authorId);
 
     CommentDto addComment(long userId, long itemId, CommentDto commentDto);
 

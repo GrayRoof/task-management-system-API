@@ -3,6 +3,7 @@ package com.effectivemobile.probation.tms.controllers;
 import com.effectivemobile.probation.tms.exceptions.NotFoundException;
 import com.effectivemobile.probation.tms.model.comment.CommentDto;
 import com.effectivemobile.probation.tms.model.task.TaskDto;
+import com.effectivemobile.probation.tms.model.task.NewTaskDto;
 import com.effectivemobile.probation.tms.services.TaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +35,10 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskDto addTask(@RequestHeader("X-Current-User-Id") long userId,
-                           @Valid @RequestBody TaskDto taskDto) throws NotFoundException {
-        log.info("SERVER TASK получен запрос POST userId =" + userId + "тело запроса: " + taskDto);
-        return taskService.add(taskDto, userId);
+    public TaskDto addTask(@RequestHeader("X-Current-User-Id") long authorId,
+                           @Valid @RequestBody NewTaskDto taskDto) throws NotFoundException {
+        log.info("SERVER TASK получен запрос POST authorId =" + authorId + "тело запроса: " + taskDto);
+        return taskService.add(taskDto, authorId);
     }
 
     @PostMapping("/{taskId}/comment")

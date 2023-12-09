@@ -16,19 +16,22 @@ import lombok.ToString;
 
 public class Task {
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column
     private String name;
     @Column
     private String description;
     @ManyToOne
-    @JoinColumn(name = "Performer")
+    @JoinColumn(name = "performer")
     private User performer;
     @ManyToOne
-    @JoinColumn(name = "Author")
+    @JoinColumn(name = "author")
     private User author;
-    @Column
-    private int state;
-    @Column
-    private int priority;
+    @Enumerated
+    @Column(columnDefinition = "bigint")
+    private TaskState state;
+    @Enumerated
+    @Column(columnDefinition = "bigint")
+    private TaskPriority priority;
 }

@@ -16,6 +16,12 @@ import java.util.Collection;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
+
+    @Override
+    public User getEntity(long id) {
+        return userRepository.getReferenceById(id);
+    }
+
     @Override
     public UserDto get(long id) {
         User user = userRepository.getReferenceById(id);
