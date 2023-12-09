@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto get(long id) {
         User user = userRepository.getReferenceById(id);
-        return UserMapper.toUserDto(user);
+        return UserMapper.toDto(user);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     public UserDto add(UserDto userDto) {
         User newUser = userRepository.save(UserMapper.toUser(userDto));
         log.info("Пользователь создан с идентификатором #{}", newUser.getId());
-        return UserMapper.toUserDto(newUser);
+        return UserMapper.toDto(newUser);
     }
 
     @Override

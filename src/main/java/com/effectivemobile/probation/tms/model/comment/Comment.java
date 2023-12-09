@@ -16,13 +16,14 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Comment {
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @Column
     private String text;
     @ManyToOne
-    @JoinColumn(name = "Task")
+    @JoinColumn(name = "task")
     private Task task;
     @ManyToOne
-    @JoinColumn(name = "Author")
+    @JoinColumn(name = "author")
     private User author;
 }

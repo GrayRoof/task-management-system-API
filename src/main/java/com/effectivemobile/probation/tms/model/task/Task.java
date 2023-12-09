@@ -1,11 +1,15 @@
 package com.effectivemobile.probation.tms.model.task;
 
+import com.effectivemobile.probation.tms.model.comment.Comment;
 import com.effectivemobile.probation.tms.model.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tasks")
@@ -34,4 +38,6 @@ public class Task {
     @Enumerated
     @Column(columnDefinition = "bigint")
     private TaskPriority priority;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private Set<Comment> comments = new HashSet<>();
 }

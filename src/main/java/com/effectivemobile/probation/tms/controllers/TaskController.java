@@ -2,6 +2,7 @@ package com.effectivemobile.probation.tms.controllers;
 
 import com.effectivemobile.probation.tms.exceptions.NotFoundException;
 import com.effectivemobile.probation.tms.model.comment.CommentDto;
+import com.effectivemobile.probation.tms.model.comment.NewCommentDto;
 import com.effectivemobile.probation.tms.model.task.TaskDto;
 import com.effectivemobile.probation.tms.model.task.NewTaskDto;
 import com.effectivemobile.probation.tms.services.TaskService;
@@ -45,11 +46,11 @@ public class TaskController {
     public CommentDto addComment(
             @RequestHeader("X-Current-User-Id") long userId,
             @PathVariable long taskId,
-            @Valid @RequestBody CommentDto commentDto
+            @RequestBody NewCommentDto newCommentDto
     ) {
         log.info("SERVER TASK COMMENT получен запрос POST userId = " + userId
-                + " taskId = " + taskId + " тело запроса: " + commentDto);
-        return taskService.addComment(userId, taskId, commentDto);
+                + " taskId = " + taskId + " тело запроса: " + newCommentDto);
+        return taskService.addComment(newCommentDto, userId, taskId);
     }
 
     @PatchMapping("/{taskId}")

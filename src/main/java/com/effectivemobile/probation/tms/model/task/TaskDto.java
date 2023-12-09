@@ -1,14 +1,14 @@
 package com.effectivemobile.probation.tms.model.task;
 
-import com.effectivemobile.probation.tms.model.comment.CommentDto;
+import com.effectivemobile.probation.tms.model.comment.NestedCommentDto;
 import com.effectivemobile.probation.tms.model.user.UserDto;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Collection;
 
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class TaskDto {
     private Long id;
     private String name;
@@ -17,5 +17,5 @@ public class TaskDto {
     private UserDto author;
     private TaskState state;
     private TaskPriority priority;
-    Collection<CommentDto> comments;
+    Collection<NestedCommentDto> comments;
 }
