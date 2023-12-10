@@ -5,7 +5,7 @@ import lombok.Getter;
 
 import java.util.Date;
 
-@AllArgsConstructor
-@Getter
+//@AllArgsConstructor
+//@Getter
 public record ErrorMessage(Date timestamp, int status, String error, String path) {
 }
