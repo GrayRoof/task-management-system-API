@@ -18,10 +18,11 @@ import java.util.List;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-@Configuration
+
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
+@Configuration
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter authFilter;
