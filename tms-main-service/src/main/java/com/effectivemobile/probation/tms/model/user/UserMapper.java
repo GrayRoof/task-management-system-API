@@ -24,7 +24,8 @@ public class UserMapper {
         return new User(
                 userDto.getId(),
                 userDto.getName() == null ? "" : userDto.getName(),
-                userDto.getEmail()
+                userDto.getEmail(),
+                ""
         );
     }
 }
