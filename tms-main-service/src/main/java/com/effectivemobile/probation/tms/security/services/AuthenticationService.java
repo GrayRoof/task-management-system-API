@@ -1,4 +1,4 @@
-package com.effectivemobile.probation.tms.security;
+package com.effectivemobile.probation.tms.security.services;
 
 import com.effectivemobile.probation.tms.model.user.LoginUserDto;
 import com.effectivemobile.probation.tms.model.user.RegisterUserDto;

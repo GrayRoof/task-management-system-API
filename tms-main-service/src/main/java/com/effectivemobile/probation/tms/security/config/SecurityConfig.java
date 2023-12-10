@@ -1,6 +1,5 @@
 package com.effectivemobile.probation.tms.security.config;
 
-import com.effectivemobile.probation.tms.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,14 +26,6 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter authFilter;
     private final AuthenticationProvider authenticationProvider;
-   // private final LogoutHandler logoutHandler;
-
-    // User Creation
-   // @Bean
-   // public UserDetailsService userDetailsService() {
-   //     return new UserInfoService();
-  //  }
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
