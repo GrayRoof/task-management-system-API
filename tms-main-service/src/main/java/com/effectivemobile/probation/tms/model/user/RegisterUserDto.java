@@ -9,7 +9,7 @@ public class RegisterUserDto {
     @NotEmpty
     private String name;
     @NotEmpty
-    @Email
+    @Email(message = "not email!")
     private String email;
     @NotEmpty
     private String password;

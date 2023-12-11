@@ -5,7 +5,7 @@ import com.effectivemobile.probation.tms.model.task.Task;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long>, TaskExtraFilterRepository {
     default Task get(long id) {
@@ -13,7 +13,7 @@ public interface TaskRepository extends JpaRepository<Task, Long>, TaskExtraFilt
                 id + " не зарегистрирована!"));
     }
 
-    Collection<Task> findAllByAuthorId(Long authorId, Pageable pageable);
+    List<Task> findAllByAuthorId(Long authorId, Pageable pageable);
 
-    Collection<Task> findAllByPerformerId(Long performerId, Pageable pageable);
+    List<Task> findAllByPerformerId(Long performerId, Pageable pageable);
 }
