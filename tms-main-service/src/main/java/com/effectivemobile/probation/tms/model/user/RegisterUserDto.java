@@ -6,11 +6,11 @@ import lombok.Data;
 
 @Data
 public class RegisterUserDto {
-    @NotEmpty
+    @NotEmpty(message = "Поле name не может быть пустым.")
     private String name;
-    @NotEmpty
-    @Email(message = "not email!")
+    @NotEmpty(message = "Поле email не может быть пустым.")
+    @Email(message = "Введенное значение не является адресом электронной почты.")
     private String email;
-    @NotEmpty
+    @NotEmpty(message = "Поле password не может быть пустым.")
     private String password;
 }

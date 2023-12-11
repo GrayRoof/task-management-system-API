@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class NewCommentDto {
-    @NotEmpty
+    @NotEmpty(message = "Поле text не может быть пустым.")
     String text;
 }

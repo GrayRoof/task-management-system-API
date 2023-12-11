@@ -24,7 +24,9 @@ public class ErrorHandler {
         Map<String, String> errors = new HashMap<>();
         exception.getConstraintViolations().forEach(error -> {
             String fieldName = error.getPropertyPath().toString();
+            log.info("ERROR FLD: " + fieldName);
             String errorMessage = error.getMessage() + " Значение: " + error.getInvalidValue().toString();
+            log.info("ERROR MSG: " + errorMessage);
             errors.put(fieldName, errorMessage);
         });
         ErrorMessage error = new ErrorMessage(
@@ -33,7 +35,10 @@ public class ErrorHandler {
                 String.valueOf(errors),
                 request.getDescription(false)
         );
-        log.warn("Ошибка запроса: {}", errors);
+        log.warn("Ошибка запроса {}: {} {}",
+                HttpStatus.BAD_REQUEST.value(),
+                errors,
+                request.getDescription(false));
         return error;
     }
 
