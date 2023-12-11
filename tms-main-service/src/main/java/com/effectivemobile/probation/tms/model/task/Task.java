@@ -1,5 +1,7 @@
 package com.effectivemobile.probation.tms.model.task;
 
+import com.effectivemobile.probation.tms.enums.TaskPriority;
+import com.effectivemobile.probation.tms.enums.TaskState;
 import com.effectivemobile.probation.tms.model.comment.Comment;
 import com.effectivemobile.probation.tms.model.user.User;
 import jakarta.persistence.*;
