@@ -36,14 +36,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDto get(long taskId, long userId) {
+    public TaskDto get(long taskId) {
         Task task = getEntity(taskId);
-        return TaskMapper.toTaskDto(task); //, comments);
+        return TaskMapper.toTaskDto(task);
     }
 
     @Override
-    public Collection<TaskDto> getAll(long userId,
-                                      String text,
+    public Collection<TaskDto> getAll(String text,
                                       int authorId,
                                       int performerId,
                                       List<TaskState> taskStates,
@@ -53,7 +52,6 @@ public class TaskServiceImpl implements TaskService {
                                       int size) {
 
         TaskSearchFilter filter = TaskSearchFilter.builder()
-                .userId(userId)
                 .text(text)
                 .authorId(authorId)
                 .performerId(performerId)

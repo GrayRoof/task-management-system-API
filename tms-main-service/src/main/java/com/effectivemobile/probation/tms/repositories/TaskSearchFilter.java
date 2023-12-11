@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Builder
 public class TaskSearchFilter {
-    private long userId;
     private String text;
     private int authorId;
     private int performerId;

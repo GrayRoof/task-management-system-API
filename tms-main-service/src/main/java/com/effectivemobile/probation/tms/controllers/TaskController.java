@@ -33,7 +33,7 @@ public class TaskController {
     public TaskDto getById(@RequestHeader("X-Current-User-Id") long userId,
                            @PathVariable long taskId) throws NotFoundException {
         log.info("SERVER TASK получен запрос GET {} от пользователя {}", taskId, userId);
-        return taskService.get(taskId, userId);
+        return taskService.get(taskId);
     }
 
     @GetMapping()
@@ -47,7 +47,7 @@ public class TaskController {
                                       @PositiveOrZero @RequestParam(defaultValue = "0") int from,
                                       @Positive @RequestParam(defaultValue = "20") int size) {
         log.info("SERVER TASK получен запрос GET ALL от пользователя {}", userId);
-        return taskService.getAll(userId, text, authorId, performerId, taskStates, taskPriorities, sortMethod, from, size);
+        return taskService.getAll(text, authorId, performerId, taskStates, taskPriorities, sortMethod, from, size);
     }
 
     @GetMapping("/i-am-author")
