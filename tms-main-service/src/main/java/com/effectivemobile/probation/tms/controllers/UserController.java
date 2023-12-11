@@ -30,11 +30,4 @@ public class UserController {
         log.info("SERVER getAllUsers");
         return userService.getAll(from, size);
     }
-
-    @PatchMapping("/{userId}")
-    public UserDto update(@RequestBody UserDto userDto,
-                          @PathVariable Long userId) throws NotFoundException {
-        log.info("SERVER update userId {}", userId);
-        return userService.patch(userDto, userId);
-    }
 }

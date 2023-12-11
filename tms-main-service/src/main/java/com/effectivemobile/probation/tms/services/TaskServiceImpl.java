@@ -3,6 +3,7 @@ package com.effectivemobile.probation.tms.services;
 import com.effectivemobile.probation.tms.enums.SortMethod;
 import com.effectivemobile.probation.tms.enums.TaskPriority;
 import com.effectivemobile.probation.tms.enums.TaskState;
+import com.effectivemobile.probation.tms.exceptions.NotAvailableException;
 import com.effectivemobile.probation.tms.model.comment.*;
 import com.effectivemobile.probation.tms.model.task.*;
 import com.effectivemobile.probation.tms.model.user.User;
@@ -85,8 +86,38 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDto patch(TaskDto taskDto, long taskId, long userId) {
-        return null;
+    public TaskDto patch(long userId, long taskId, UpdateTaskDto taskDto) {
+        User requester = userService.getEntity(userId);
+        Task task = taskRepository.get(taskId);
+
+        boolean isAuthor = requester.equals(task.getAuthor());
+        boolean isPerformer = requester.equals(task.getPerformer());
+
+        if(isAuthor) {
+            if(taskDto.getName() != null) {
+                task.setName(taskDto.getName());
+            }
+            if(taskDto.getDescription() != null) {
+                task.setDescription(task.getDescription());
+            }
+            if (taskDto.getPriority() != null) {
+                task.setPriority(taskDto.getPriority());
+            }
+            if (taskDto.getPerformer() != null) {
+                User newPerformer = userService.getEntity(taskDto.getPerformer());
+                task.setPerformer(newPerformer);
+            } else if(isPerformer) {
+                checkUpdateForPerformer(taskDto);
+                if(taskDto.getState() != null) {
+                    task.setState(taskDto.getState());
+                }
+            } else {
+                throw new NotAvailableException("Вы не являетесь Автором или Исполнителем Задачи!");
+            }
+        }
+        TaskDto fullDto = TaskMapper.toTaskDto(taskRepository.save(task));
+        log.info("TASK: Задача с id = {} изменена согласно данным {}", taskId, taskDto);
+        return fullDto;
     }
 
     @Override
@@ -107,6 +138,17 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void delete(long taskId, long userId) {
+        Task task = taskRepository.get(taskId);
+        User currentUser = userService.getEntity(userId);
+        if (!currentUser.equals(task.getAuthor())) {
+            throw new RuntimeException("Только Автор задачи может удалить свою задачу!");
+        }
+        taskRepository.deleteById(taskId);
+
+    }
+
     private Sort.Order getOrder(Sort.Direction direction, SortMethod sortMethod) {
         String property;
         switch (sortMethod) {
@@ -116,5 +158,20 @@ public class TaskServiceImpl implements TaskService {
             default -> property = "id";
         }
         return new Sort.Order(direction, property);
+    }
+
+    private void checkUpdateForPerformer(UpdateTaskDto taskDto) {
+        if (taskDto.getName() != null) {
+            throw new NotAvailableException("Исполнитель не может изменить Название Задачи.");
+        }
+        if (taskDto.getDescription() != null) {
+            throw new NotAvailableException("Исполнитель не может изменить Описание Задачи.");
+        }
+        if (taskDto.getPerformer() != null) {
+            throw new NotAvailableException("Исполнитель не может назначить Исполнителя Задачи.");
+        }
+        if (taskDto.getPriority() != null) {
+            throw new NotAvailableException("Исполнитель не может изменить Приоритет Задачи.");
+        }
     }
 }

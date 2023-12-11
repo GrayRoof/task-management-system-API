@@ -3,6 +3,7 @@ package com.effectivemobile.probation.tms.exceptions;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -61,6 +62,22 @@ public class ErrorHandler {
         );
         log.warn("Ошибка запроса {}: {} {}",
                 HttpStatus.BAD_REQUEST.value(),
+                exception.getMessage(),
+                request.getDescription(false));
+        return error;
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(value = {DataIntegrityViolationException.class, NotAvailableException.class})
+    public ErrorMessage handleDuplicateException(Exception exception, WebRequest request) {
+        ErrorMessage error = new ErrorMessage(
+                new Date(),
+                HttpStatus.CONFLICT.value(),
+                exception.getMessage(),
+                request.getDescription(false)
+        );
+        log.warn("Ошибка запроса {}: {} {}",
+                HttpStatus.CONFLICT.value(),
                 exception.getMessage(),
                 request.getDescription(false));
         return error;
