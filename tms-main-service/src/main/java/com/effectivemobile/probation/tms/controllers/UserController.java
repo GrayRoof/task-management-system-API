@@ -30,6 +30,4 @@ public class UserController {
         log.info("SERVER getAllUsers");
         return userService.getAll(from, size);
     }
-
-
 }

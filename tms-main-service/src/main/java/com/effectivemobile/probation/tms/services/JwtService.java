@@ -1,4 +1,4 @@
-package com.effectivemobile.probation.tms.security.services;
+package com.effectivemobile.probation.tms.services;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

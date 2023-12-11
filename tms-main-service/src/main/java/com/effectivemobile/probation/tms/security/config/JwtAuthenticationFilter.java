@@ -1,6 +1,6 @@
 package com.effectivemobile.probation.tms.security.config;
 
-import com.effectivemobile.probation.tms.security.services.JwtService;
+import com.effectivemobile.probation.tms.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

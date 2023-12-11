@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    /*
     @Override
     public UserDto add(UserDto userDto) {
         User newUser = userRepository.save(UserMapper.toUser(userDto));
@@ -48,8 +49,5 @@ public class UserServiceImpl implements UserService {
         return UserMapper.toDto(newUser);
     }
 
-    @Override
-    public UserDto patch(UserDto userDto, Long userId) {
-        return null;
-    }
+     */
 }
