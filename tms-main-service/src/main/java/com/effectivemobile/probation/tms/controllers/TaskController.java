@@ -14,6 +14,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,20 +51,22 @@ public class TaskController {
 
     @GetMapping("/i-am-author")
     public Collection<TaskDto> getAllMeAuthor(@RequestHeader("X-Current-User-Id") long authorId,
-                                      @RequestParam(required = false, defaultValue = "ID") SortMethod sortMethod,
-                                      @PositiveOrZero @RequestParam(required = false, defaultValue = "0") int from,
-                                      @Positive @RequestParam(required = false, defaultValue = "20") int size) {
+                               @RequestParam(required = false, defaultValue = "ID") SortMethod sortMethod,
+                               @RequestParam(required = false, defaultValue = "ASC") Sort.Direction direction,
+                               @PositiveOrZero@RequestParam(defaultValue = "0") int from,
+                               @Positive @RequestParam(defaultValue = "20") int size) {
         log.info("SERVER TASK получен запрос GET ALL where user is author");
-        return taskService.getAllByAuthorId(authorId, sortMethod, from, size);
+        return taskService.getAllByAuthorId(authorId, sortMethod, direction, from, size);
     }
 
     @GetMapping("/i-am-performer")
     public Collection<TaskDto> getAllMePerformer(@RequestHeader("X-Current-User-Id") long performerId,
-                                              @RequestParam(required = false, defaultValue = "ID") SortMethod sortMethod,
-                                              @PositiveOrZero @RequestParam(defaultValue = "0") int from,
-                                              @Positive @RequestParam(defaultValue = "20") int size) {
+                               @RequestParam(required = false, defaultValue = "ID") SortMethod sortMethod,
+                               @RequestParam(required = false, defaultValue = "ASC") Sort.Direction direction,
+                               @PositiveOrZero @RequestParam(defaultValue = "0") int from,
+                               @Positive @RequestParam(defaultValue = "20") int size) {
         log.info("SERVER TASK получен запрос GET ALL where user is performer");
-        return taskService.getAllByPerformerId(performerId, sortMethod, from, size);
+        return taskService.getAllByPerformerId(performerId, sortMethod, direction, from, size);
     }
 
     @PostMapping
@@ -93,14 +96,4 @@ public class TaskController {
                 + " TaskId = " + taskId + " тело запроса " + taskDto);
         return taskService.patch(taskDto, taskId, userId);
     }
-
-    @GetMapping("/search")
-    public Collection<TaskDto> search(@RequestHeader("X-Current-User-Id") long userId,
-                                      @RequestParam String text,
-                                      @PositiveOrZero @RequestParam(required = false, defaultValue = "0") int from,
-                                      @Positive @RequestParam(required = false, defaultValue = "20") int size) {
-        log.info("SERVER TASK получен запрос GET userId = " + userId + " search = " + text);
-        return taskService.search(text, userId, from, size);
-    }
-
 }

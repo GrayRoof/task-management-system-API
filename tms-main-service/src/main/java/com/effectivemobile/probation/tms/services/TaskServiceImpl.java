@@ -6,11 +6,13 @@ import com.effectivemobile.probation.tms.enums.TaskState;
 import com.effectivemobile.probation.tms.model.comment.*;
 import com.effectivemobile.probation.tms.model.task.*;
 import com.effectivemobile.probation.tms.model.user.User;
+import com.effectivemobile.probation.tms.paginations.OffsetPageable;
 import com.effectivemobile.probation.tms.repositories.CommentRepository;
 import com.effectivemobile.probation.tms.repositories.TaskRepository;
 import com.effectivemobile.probation.tms.repositories.TaskSearchFilter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -88,17 +90,31 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Collection<TaskDto> search(String text, long userId, int from, int size) {
-        return null;
+    public Collection<TaskDto> getAllByAuthorId(long authorId, SortMethod sortMethod, Sort.Direction direction, int from, int size) {
+        return taskRepository.findAllByAuthorId(authorId,
+                        OffsetPageable.of(from, size, Sort.by(getOrder(direction, sortMethod))))
+                .stream()
+                .map(TaskMapper::toTaskDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Collection<TaskDto> getAllByAuthorId(long authorId, SortMethod sortMethod, int from, int size) {
-        return null;
+    public Collection<TaskDto> getAllByPerformerId(long performerId, SortMethod sortMethod, Sort.Direction direction, int from, int size) {
+        return taskRepository.findAllByPerformerId(performerId,
+                        OffsetPageable.of(from, size, Sort.by(getOrder(direction, sortMethod))))
+                .stream()
+                .map(TaskMapper::toTaskDto)
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public Collection<TaskDto> getAllByPerformerId(long performerId, SortMethod sortMethod, int from, int size) {
-        return null;
+    private Sort.Order getOrder(Sort.Direction direction, SortMethod sortMethod) {
+        String property;
+        switch (sortMethod) {
+            case NAME -> property = "name";
+            case TASK_STATE -> property = "state";
+            case TASK_PRIORITY -> property = "priority";
+            default -> property = "id";
+        }
+        return new Sort.Order(direction, property);
     }
 }

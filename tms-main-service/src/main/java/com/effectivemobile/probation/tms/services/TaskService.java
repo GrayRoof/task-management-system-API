@@ -8,6 +8,7 @@ import com.effectivemobile.probation.tms.model.comment.NewCommentDto;
 import com.effectivemobile.probation.tms.model.task.Task;
 import com.effectivemobile.probation.tms.model.task.TaskDto;
 import com.effectivemobile.probation.tms.model.task.NewTaskDto;
+import org.springframework.data.domain.Sort;
 
 import java.util.Collection;
 import java.util.List;
@@ -26,9 +27,14 @@ public interface TaskService {
 
     TaskDto patch(TaskDto taskDto, long taskId, long userId);
 
-    Collection<TaskDto> search(String text, long userId, int from, int size);
+    Collection<TaskDto> getAllByAuthorId(long authorId,
+                                         SortMethod sortMethod,
+                                         Sort.Direction direction,
+                                         int from,
+                                         int size);
 
-    Collection<TaskDto> getAllByAuthorId(long authorId, SortMethod sortMethod, int from, int size);
-
-    Collection<TaskDto> getAllByPerformerId(long performerId, SortMethod sortMethod, int from, int size);
+    Collection<TaskDto> getAllByPerformerId(long performerId,
+                                            SortMethod sortMethod,
+                                            Sort.Direction direction,
+                                            int from, int size);
 }
