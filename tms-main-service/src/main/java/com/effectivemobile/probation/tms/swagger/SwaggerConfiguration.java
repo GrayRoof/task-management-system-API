@@ -17,7 +17,7 @@ public class SwaggerConfiguration {
     public OpenAPI openAPI() {
         return new OpenAPI().addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()))
-                .info(new Info().title("Task Manager System REST API")
+                .info(new Info().title("Task Management System REST API")
                         .description("Простой API в качестве тестового задания.")
                         .version("1.0").contact(new Contact()
                                 .name("Шаймиева Маргарита")
