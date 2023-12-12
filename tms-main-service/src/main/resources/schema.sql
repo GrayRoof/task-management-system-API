@@ -10,13 +10,15 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE TABLE IF NOT EXISTS task_states(
     ID BIGINT NOT NULL,
     name VARCHAR(255) NOT NULL,
-    CONSTRAINT pk_task_states PRIMARY KEY (ID)
+    CONSTRAINT pk_task_states PRIMARY KEY (ID),
+    CONSTRAINT uq_task_state_name UNIQUE (name)
 );
 
 CREATE TABLE IF NOT EXISTS task_priority(
     ID BIGINT NOT NULL,
     name VARCHAR(255) NOT NULL,
-    CONSTRAINT pk_task_priority PRIMARY KEY (ID)
+    CONSTRAINT pk_task_priority PRIMARY KEY (ID),
+    CONSTRAINT uq_task_priority_name UNIQUE (name)
 );
 
 CREATE TABLE IF NOT EXISTS tasks(
@@ -28,7 +30,7 @@ CREATE TABLE IF NOT EXISTS tasks(
     state BIGINT NOT NULL,
     priority BIGINT NOT NULL,
     CONSTRAINT pk_tasks PRIMARY KEY (ID),
-    CONSTRAINT fk_tasks_author FOREIGN KEY(author) REFERENCES users(id),
+    CONSTRAINT fk_tasks_author FOREIGN KEY(author) REFERENCES users(id) ON DELETE CASCADE,
     CONSTRAINT fk_tasks_performer FOREIGN KEY(performer) REFERENCES users(id),
     CONSTRAINT fk_tasks_state FOREIGN KEY(state) REFERENCES task_states(id),
     CONSTRAINT fk_tasks_priority FOREIGN KEY(priority) REFERENCES task_priority(id)
@@ -40,6 +42,6 @@ CREATE TABLE IF NOT EXISTS comments(
     task BIGINT NOT NULL,
     author BIGINT NOT NULL,
     CONSTRAINT pk_comments PRIMARY KEY (ID),
-    CONSTRAINT fk_comments_author FOREIGN KEY(author) REFERENCES users(ID),
-    CONSTRAINT fk_comments_task FOREIGN KEY(task) REFERENCES tasks(ID)
+    CONSTRAINT fk_comments_author FOREIGN KEY(author) REFERENCES users(ID) ON DELETE CASCADE,
+    CONSTRAINT fk_comments_task FOREIGN KEY(task) REFERENCES tasks(ID) ON DELETE CASCADE
 );

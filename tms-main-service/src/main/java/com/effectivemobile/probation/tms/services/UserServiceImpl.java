@@ -23,13 +23,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getEntity(long id) {
-        return userRepository.getReferenceById(id);
+        return userRepository.get(id);
     }
 
     @Override
     public UserDto get(long id) {
-        User user = userRepository.getReferenceById(id);
-        return UserMapper.toDto(user);
+        return UserMapper.toDto(getEntity(id));
     }
 
     @Override
@@ -40,14 +39,4 @@ public class UserServiceImpl implements UserService {
                 .map(UserMapper::toDto)
                 .collect(Collectors.toList());
     }
-
-    /*
-    @Override
-    public UserDto add(UserDto userDto) {
-        User newUser = userRepository.save(UserMapper.toUser(userDto));
-        log.info("Пользователь создан с идентификатором #{}", newUser.getId());
-        return UserMapper.toDto(newUser);
-    }
-
-     */
 }

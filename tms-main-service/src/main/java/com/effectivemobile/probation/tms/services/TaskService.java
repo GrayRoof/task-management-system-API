@@ -55,12 +55,12 @@ public interface TaskService {
 
     /**
      * Добавляет Комментарий к Задаче
+     * @param taskId        идентификатор Задачи
+     * @param userId        идентификатор Пользователя
      * @param newCommentDto данные Комментария
-     * @param userId идентификатор Пользователя
-     * @param taskId идентификатор Задачи
      * @return CommentDto - DTO созданного комментария
      */
-    CommentDto addComment(NewCommentDto newCommentDto, long userId, long taskId);
+    CommentDto addComment(long taskId, long userId, NewCommentDto newCommentDto);
 
     /**
      * Обновляет данные Задачи

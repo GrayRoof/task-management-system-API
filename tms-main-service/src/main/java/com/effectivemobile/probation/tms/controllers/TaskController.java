@@ -86,7 +86,7 @@ public class TaskController {
     ) {
         log.info("SERVER TASK COMMENT получен запрос POST userId = " + userId
                 + " taskId = " + taskId + " тело запроса: " + newCommentDto);
-        return taskService.addComment(newCommentDto, userId, taskId);
+        return taskService.addComment(taskId, userId, newCommentDto);
     }
 
     @PatchMapping("/{taskId}")
