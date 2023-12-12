@@ -76,7 +76,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public CommentDto addComment(NewCommentDto newCommentDto, long userId, long taskId) {
+    public CommentDto addComment(long taskId, long userId, NewCommentDto newCommentDto) {
         User user = userService.getEntity(userId);
         Task task = taskRepository.get(taskId);
         Comment newComment = commentRepository.save(CommentMapper.toComment(newCommentDto, task, user));
@@ -87,7 +87,6 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto patch(long userId, long taskId, UpdateTaskDto taskDto) {
         User requester = userService.getEntity(userId);
         Task task = taskRepository.get(taskId);
-
         boolean isAuthor = requester.equals(task.getAuthor());
         boolean isPerformer = requester.equals(task.getPerformer());
 
@@ -104,15 +103,17 @@ public class TaskServiceImpl implements TaskService {
             if (taskDto.getPerformer() != null) {
                 User newPerformer = userService.getEntity(taskDto.getPerformer());
                 task.setPerformer(newPerformer);
-            } else if(isPerformer) {
+            }
+        } else if(isPerformer) {
+                log.info("TEST isPerformer");
                 checkUpdateForPerformer(taskDto);
                 if(taskDto.getState() != null) {
                     task.setState(taskDto.getState());
                 }
-            } else {
+        } else {
                 throw new NotAvailableException("Вы не являетесь Автором или Исполнителем Задачи!");
             }
-        }
+
         TaskDto fullDto = TaskMapper.toTaskDto(taskRepository.save(task));
         log.info("TASK: Задача с id = {} изменена согласно данным {}", taskId, taskDto);
         return fullDto;
