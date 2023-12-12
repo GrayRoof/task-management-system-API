@@ -31,6 +31,7 @@ docker-compose up
 
 Данная инструкция запустит сервер по адресу: [http://localhost:8080/](http://localhost:8080/)
 API будет доступен по адресу: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+[Постман коллекция](tms-main-service/src/main/resources/EM_TMS_PROBATION.postman_collection)
 
 ### Схема БД: 
 ![ER диаграмма TMS](tms-main-service/src/main/resources/img/tms-emobile-diagram.png)

@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -67,22 +68,27 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public TaskDto add(NewTaskDto taskDto, long authorId) {
         User performer = userService.getEntity(taskDto.getPerformer());
         User author = userService.getEntity(authorId);
         Task task = taskRepository.save(TaskMapper.toTask(taskDto, performer, author));
-        return TaskMapper.toTaskDto(task, new HashSet<>());
+        Task toOutput = taskRepository.get(task.getId());
+        return TaskMapper.toTaskDto(toOutput, new HashSet<>());
     }
 
+    @Transactional
     @Override
     public CommentDto addComment(long taskId, long userId, NewCommentDto newCommentDto) {
         User user = userService.getEntity(userId);
         Task task = taskRepository.get(taskId);
         Comment newComment = commentRepository.save(CommentMapper.toComment(newCommentDto, task, user));
-        return CommentMapper.toCommentDto(newComment);
+        Comment toOutput = commentRepository.get(newComment.getId());
+        return CommentMapper.toCommentDto(toOutput);
     }
 
+    @Transactional
     @Override
     public TaskDto patch(long userId, long taskId, UpdateTaskDto taskDto) {
         User requester = userService.getEntity(userId);
@@ -113,8 +119,9 @@ public class TaskServiceImpl implements TaskService {
         } else {
                 throw new NotAvailableException("Вы не являетесь Автором или Исполнителем Задачи!");
             }
-
-        TaskDto fullDto = TaskMapper.toTaskDto(taskRepository.save(task));
+        Task newTask = taskRepository.save(task);
+        Task toOutput = taskRepository.get(newTask.getId());
+        TaskDto fullDto = TaskMapper.toTaskDto(toOutput);
         log.info("TASK: Задача с id = {} изменена согласно данным {}", taskId, taskDto);
         return fullDto;
     }
@@ -137,6 +144,7 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public void delete(long taskId, long userId) {
         Task task = taskRepository.get(taskId);

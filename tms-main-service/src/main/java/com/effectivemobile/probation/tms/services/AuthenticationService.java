@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,14 +26,16 @@ public class AuthenticationService {
      * @param input данные Пользователя для регистрации
      * @return User
      */
+    @Transactional
     public User signup(RegisterUserDto input) {
         User user = new User();
         user.setName(input.getName());
         user.setEmail(input.getEmail());
         user.setPassword(passwordEncoder.encode(input.getPassword()));
         User newUser = userRepository.save(user);
-        log.info("Пользователь создан с идентификатором #{}", newUser.getId());
-        return newUser;
+        User toOutput = userRepository.get(newUser.getId());
+        log.info("Пользователь создан с идентификатором #{}", toOutput.getId());
+        return toOutput;
     }
 
     /**
