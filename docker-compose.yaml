@@ -1,0 +1,25 @@
+version: '3.1'
+services:
+  tms-service:
+    build: tms-main-service
+    container_name: tms-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - tms-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-tms-db:5432/tms
+      - SPRING_DATASOURCE_USER=tms_admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+
+  tms-db:
+    image: postgres:15.1-alpine
+    container_name: postgres-tms-db
+    ports:
+      - "6542:5432"
+    environment:
+      - POSTGRES_DB=tms
+      - POSTGRES_USER=tms_admin
+      - POSTGRES_PASSWORD=admin
+
