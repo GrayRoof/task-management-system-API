@@ -1,29 +1,33 @@
-# Read Me First
-The following was discovered as part of building this project:
+# Probation task
+Тестовое задание для стажировки
+## Описание
+REST API Task Management System с использованием Java. 
+Система обеспечивает создание, редактирование, удаление и просмотр задач. 
+Каждая задача содержитт заголовок, описание, статус, приоритет, автора задачи и исполнителя. 
 
-* No Docker Compose services found. As of now, the application won't start! Please add at least one service to the `compose.yaml` file.
 
-# Getting Started
+### [Репозиторий](https://github.com/GrayRoof/tms-emobile)
 
-### Reference Documentation
-For further reference, please consider the following sections:
+### Запустить решение (через Maven)
+Чтобы запустить сервер решения, выполните код ниже:
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.2.0/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/3.2.0/maven-plugin/reference/html/#build-image)
-* [Docker Compose Support](https://docs.spring.io/spring-boot/docs/3.2.0/reference/htmlsingle/index.html#features.docker-compose)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/3.2.0/reference/htmlsingle/index.html#web)
-* [Spring Security](https://docs.spring.io/spring-boot/docs/3.2.0/reference/htmlsingle/index.html#web.security)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/3.2.0/reference/htmlsingle/index.html#data.sql.jpa-and-spring-data)
+```
+mvn package spring-boot:run
+```
+
+### Запустить решение (через Docker)
+Чтобы запустить сервер решения, выполните код ниже:
+
+```
+docker-compose build
+```
+```
+docker-compose up
+```
+
+Данная инструкция запустит сервер. 
+Приложение будет доступно по адресу: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 ### Схема БД: 
-![](C:\Users\grayroof\dev\tms\src\main\resources\static\tms-emobile-diagram.png "Схема БД")
-
-
-### Docker Compose support
-This project contains a Docker Compose file named `compose.yaml`.
-
-However, no services were found. As of now, the application won't start!
-
-Please make sure to add at least one service in the `compose.yaml` file.
+![](src/main/resources/img/tms-emobile-diagram.png "Схема БД")
 
