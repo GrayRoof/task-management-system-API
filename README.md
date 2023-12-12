@@ -29,5 +29,5 @@ docker-compose up
 Приложение будет доступно по адресу: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 ### Схема БД: 
-![](src/main/resources/img/tms-emobile-diagram.png "Схема БД")
+![ER диаграмма TMS](src/main/resources/img/tms-emobile-diagram.png)
 
