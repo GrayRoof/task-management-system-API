@@ -1,4 +1,4 @@
-package com.effectivemobile.probation.tms.model.task;
+package com.effectivemobile.probation.tms.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
