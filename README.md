@@ -19,14 +19,18 @@ mvn package spring-boot:run
 Чтобы запустить сервер решения, выполните код ниже:
 
 ```
+mvn package
+```
+
+```
 docker-compose build
 ```
 ```
 docker-compose up
 ```
 
-Данная инструкция запустит сервер. 
-Приложение будет доступно по адресу: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+Данная инструкция запустит сервер по адресу: [http://localhost:8080/](http://localhost:8080/)
+API будет доступен по адресу: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 ### Схема БД: 
 ![ER диаграмма TMS](tms-main-service/src/main/resources/img/tms-emobile-diagram.png)
