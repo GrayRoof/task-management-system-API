@@ -13,6 +13,6 @@ public class MainController {
     @GetMapping()
     public String getStart() {
         log.info("SERVER получен запрос GET ");
-        return "hello";
+        return "greetings";
     }
 }
