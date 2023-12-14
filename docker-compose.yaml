@@ -11,7 +11,6 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-tms-db:5432/tms
       - SPRING_DATASOURCE_USER=tms_admin
       - SPRING_DATASOURCE_PASSWORD=admin
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
 
   tms-db:
     image: postgres:15.1-alpine
