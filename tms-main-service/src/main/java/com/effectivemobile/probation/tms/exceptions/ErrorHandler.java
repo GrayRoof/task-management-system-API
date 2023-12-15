@@ -75,12 +75,28 @@ public class ErrorHandler {
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(value = {DataIntegrityViolationException.class, NotAvailableException.class})
-    public ErrorMessage handleDuplicateException(Exception exception, WebRequest request) {
+    @ExceptionHandler(value = {NotAvailableException.class})
+    public ErrorMessage handleNotAvailableException(Exception exception, WebRequest request) {
         ErrorMessage error = new ErrorMessage(
                 new Date(),
                 HttpStatus.CONFLICT.value(),
                 exception.getMessage(),
+                request.getDescription(false)
+        );
+        log.warn("Ошибка запроса {}: {} {}",
+                HttpStatus.CONFLICT.value(),
+                exception.getMessage(),
+                request.getDescription(false));
+        return error;
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(value = {DataIntegrityViolationException.class})
+    public ErrorMessage handleDataIntegrityException(DataIntegrityViolationException exception, WebRequest request) {
+        ErrorMessage error = new ErrorMessage(
+                new Date(),
+                HttpStatus.CONFLICT.value(),
+                exception.getMostSpecificCause().getMessage(),
                 request.getDescription(false)
         );
         log.warn("Ошибка запроса {}: {} {}",
